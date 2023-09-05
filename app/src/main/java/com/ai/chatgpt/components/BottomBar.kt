@@ -1,9 +1,8 @@
 package com.ai.chatgpt.components
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,25 +31,29 @@ import com.ai.chatgpt.R
 fun BottomBar(text: MutableState<String>, onClick: () -> Unit) {
 //    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
 
+    Column(modifier = Modifier.fillMaxWidth().height(120.dp),
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally) {
+
         Row(modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp)
+            .height(60.dp)
             .padding(start = 20.dp, end = 20.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween) {
             TextField(value = text.value, onValueChange = { text.value = it }, singleLine = false,
-                modifier = Modifier.fillMaxWidth(0.88f),
+                modifier = Modifier.fillMaxWidth().height(60.dp),
                 colors = TextFieldDefaults.textFieldColors(focusedIndicatorColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent),
                 shape = RoundedCornerShape(10.dp),
-                placeholder = { Text(text = "Who is Prasidh Gopal Anchan?", style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Normal, color = Color.Black.copy(alpha = 0.8f))) }
-            )
-
-            IconButton(onClick = { onClick.invoke() }) {
-                Icon(painter = painterResource(id = R.drawable.send), contentDescription = "Send",
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                        .size(40.dp))
-            }
+                placeholder = { Text(text = "Who is Prasidh Gopal Anchan?", style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Normal, color = Color.Black.copy(alpha = 0.8f))) },
+                trailingIcon = {
+                    IconButton(onClick = { onClick.invoke() }) {
+                        Icon(painter = painterResource(id = R.drawable.send), contentDescription = "Send",
+                            modifier = Modifier
+                                .padding(start = 5.dp)
+                                .size(25.dp))
+                    } })
         }
-//    }
+        Text(text = "ChatGPT version 3.5", style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal), modifier = Modifier.padding(10.dp))
+    }
 }

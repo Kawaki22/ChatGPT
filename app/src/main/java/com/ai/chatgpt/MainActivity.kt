@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
 import com.ai.chatgpt.screens.HomeScreen
 import com.ai.chatgpt.ui.theme.ChatGPTTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 //            ChatGPTTheme {
+            WindowCompat.setDecorFitsSystemWindows(window, false)
                     MyChatGPTApp()
 //            }
         }
