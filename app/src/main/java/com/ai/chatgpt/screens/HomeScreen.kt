@@ -1,6 +1,6 @@
 package com.ai.chatgpt.screens
 
-import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ai.chatgpt.components.AppBar
@@ -32,11 +33,19 @@ fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
 
     val questionState = remember { mutableStateOf("") }
     val questionCard = remember { mutableStateOf("") }
-    val response = viewModel.response?.collectAsState()
+    val response = viewModel.response.collectAsState().value.data?.choices
+
+    //Toast Exception
+    val context = LocalContext.current
+    val exception = viewModel.response.collectAsState().value.e?.localizedMessage
+//    LaunchedEffect(key1 = exception) { Toast.makeText(context, exception, Toast.LENGTH_LONG).show() }
+    if (exception?.isNotBlank() == true) Toast.makeText(context, exception, Toast.LENGTH_LONG).show()
 
     val localKeyboard = LocalSoftwareKeyboardController.current
 
     val chatList = remember { mutableListOf<MChatDetails>() }
+
+    //Dummy List
     val list = remember {
         mutableListOf<MChatDetails>(
             MChatDetails("Say this is a test", Color.Blue, "User"),
@@ -55,15 +64,15 @@ fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
     }
 
     //Update response in list
-    if (response?.value?.isNotEmpty() == true) {
-        LaunchedEffect(key1 = response.value) {
-            chatList.add(MChatDetails(text = response.value[0].text.trim(), color = Color(0xFF8FBE8F), type = "Assistant"))
+    if (response?.isNotEmpty() == true) {
+        LaunchedEffect(key1 = response) {
+            chatList.add(MChatDetails(text = response[0].text.trim(), color = Color(0xFF8FBE8F), type = "Assistant"))
         }
     }
 
     val scrollState = rememberScrollState()
-
-    LaunchedEffect(key1 = response?.value) {
+    //Scroll down on new response
+    LaunchedEffect(key1 = response) {
         delay(600)
         if (scrollState.canScrollForward) scrollState.animateScrollTo(scrollState.maxValue)
     }

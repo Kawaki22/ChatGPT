@@ -28,7 +28,7 @@ fun AppBar() {
         Row(modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center) {
-            Image(painter = painterResource(id = R.drawable.chatgpt), contentDescription = "ChatGPT",modifier = Modifier.size(45.dp).padding(end = 10.dp))
+            Image(painter = painterResource(id = R.drawable.chatgpt), contentDescription = "ChatGPT", modifier = Modifier.size(45.dp).padding(end = 10.dp))
             Text(text = "ChatGPT", style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.Bold))
         }
     }

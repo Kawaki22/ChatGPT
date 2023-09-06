@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,6 +25,8 @@ import com.ai.chatgpt.models.MChatDetails
 @Composable
 fun ChatBubble(chat: MChatDetails, isVisible: Boolean, color: Color) {
 
+    val textColor = if (isSystemInDarkTheme()) Color.Black else Color.White
+
     AnimatedVisibility(visible = isVisible, enter = slideInHorizontally(animationSpec = tween(1000)), exit = slideOutHorizontally(animationSpec = tween(1000))) {
         Box(
             modifier = Modifier
@@ -42,7 +45,8 @@ fun ChatBubble(chat: MChatDetails, isVisible: Boolean, color: Color) {
                     text = chat.text,
                     style = TextStyle(
                         fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = textColor
                     ),
                     modifier = Modifier
                         .padding(10.dp)
