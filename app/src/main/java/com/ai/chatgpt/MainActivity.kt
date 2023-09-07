@@ -3,12 +3,14 @@ package com.ai.chatgpt
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import com.ai.chatgpt.navigation.Navigation
@@ -22,7 +24,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ChatGPTTheme {
+                val view = LocalView.current
                 WindowCompat.setDecorFitsSystemWindows(window, false)
+//                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = isSystemInDarkTheme()
                 MyChatGPTApp()
             }
         }

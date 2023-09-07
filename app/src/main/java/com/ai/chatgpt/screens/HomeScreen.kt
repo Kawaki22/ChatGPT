@@ -21,9 +21,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.ai.chatgpt.Utils
 import com.ai.chatgpt.components.AppBar
 import com.ai.chatgpt.components.BottomBar
 import com.ai.chatgpt.components.ChatBubble
+import com.ai.chatgpt.components.DefaultScreen
 import com.ai.chatgpt.models.MChatDetails
 import kotlinx.coroutines.delay
 
@@ -66,7 +68,7 @@ fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
     //Update response in list
     if (response?.isNotEmpty() == true) {
         LaunchedEffect(key1 = response) {
-            chatList.add(MChatDetails(text = response[0].text.trim(), color = Color(0xFF8FBE8F), type = "Assistant"))
+            chatList.add(MChatDetails(text = response[0].text.trim(), color = Utils.gptGreen, type = "Assistant"))
         }
     }
 
@@ -77,30 +79,32 @@ fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
         if (scrollState.canScrollForward) scrollState.animateScrollTo(scrollState.maxValue)
     }
 
-    Scaffold(modifier = Modifier.fillMaxSize(),
-        bottomBar = { BottomBar(text = questionState) {
-        questionCard.value = questionState.value
-        if (questionState.value != "") {
-            viewModel.getChatGPTResponse(question = questionState.value.trim())
-            chatList.add(MChatDetails(text = questionState.value.trim(), color = Color(0xFF62A7DF), type = "User"))
-            questionState.value = ""
-            localKeyboard?.hide()
-        }
-    }
-        },
-        topBar = { AppBar() }
-    ) { innerPadding ->
+    if (questionCard.value.isNotBlank()) {
 
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)
-            .verticalScroll(scrollState),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start) {
-
-            for (chat in chatList) {
-                ChatBubble(chat = chat, isVisible = true, color = chat.color)
+        Scaffold(modifier = Modifier.fillMaxSize(),
+            bottomBar = { BottomBar(text = questionState) {
+                questionCard.value = questionState.value
+                if (questionState.value != "") {
+                    viewModel.getChatGPTResponse(question = questionState.value.trim())
+                    chatList.add(MChatDetails(text = questionState.value.trim(), color = Utils.gptBlue, type = "User"))
+                    questionState.value = ""
+                    localKeyboard?.hide()
+                }
             }
+            },
+            topBar = { AppBar() }
+        ) { innerPadding ->
+
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .verticalScroll(scrollState),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start) {
+
+                for (chat in chatList) {
+                    ChatBubble(chat = chat, isVisible = true, color = chat.color)
+                }
 
 //            LazyColumn(state = scrollState) {
 //
@@ -108,6 +112,19 @@ fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
 //                    ChatBubble(chat = chat, isVisible = true, color = chat.color)
 //                }
 //            }
+            }
+        }
+    } else {
+        DefaultScreen(cardValue = { questionState.value = it }) {
+            BottomBar(text = questionState) {
+                questionCard.value = questionState.value
+                if (questionState.value != "") {
+                    viewModel.getChatGPTResponse(question = questionState.value.trim())
+                    chatList.add(MChatDetails(text = questionState.value.trim(), color = Utils.gptBlue, type = "User"))
+                    questionState.value = ""
+                    localKeyboard?.hide()
+                }
+            }
         }
     }
 }
