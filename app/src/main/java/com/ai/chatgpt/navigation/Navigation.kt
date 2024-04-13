@@ -10,9 +10,12 @@ import com.ai.chatgpt.screens.SplashScreen
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = NavScreens.SplashScreen.name) {
+    NavHost(
+        navController = navController,
+        startDestination = NavScreens.SplashScreen.name
+    ) {
         composable(NavScreens.SplashScreen.name) {
-         SplashScreen(navController = navController)
+            SplashScreen(navController = navController)
         }
         composable(NavScreens.HomeScreen.name) {
             HomeScreen()

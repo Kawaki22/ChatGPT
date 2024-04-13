@@ -1,6 +1,9 @@
 package com.ai.chatgpt.models
 
-data class MChat(
+import androidx.compose.runtime.Stable
+
+@Stable
+data class MChatRequest(
     val model: String,
     val prompt: String,
     val temperature: Float,

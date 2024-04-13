@@ -24,9 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ChatGPTTheme {
-                val view = LocalView.current
                 WindowCompat.setDecorFitsSystemWindows(window, false)
-//                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = isSystemInDarkTheme()
                 MyChatGPTApp()
             }
         }
@@ -37,10 +35,3 @@ class MainActivity : ComponentActivity() {
 fun MyChatGPTApp() {
     Navigation()
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    ChatGPTTheme {
-//    }
-//}

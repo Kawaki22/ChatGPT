@@ -1,6 +1,6 @@
 package com.ai.chatgpt.di
 
-import com.ai.chatgpt.Utils
+import com.ai.chatgpt.Utils.BASE_URL
 import com.ai.chatgpt.network.ChatApi
 import dagger.Module
 import dagger.Provides
@@ -17,7 +17,9 @@ object AppModule {
     @Provides
     @Singleton
     fun provideChatGptApi(): ChatApi = Retrofit.Builder()
-        .baseUrl(Utils.BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create()).build().create(ChatApi::class.java)
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(ChatApi::class.java)
 
 }

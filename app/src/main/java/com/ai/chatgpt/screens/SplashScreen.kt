@@ -34,10 +34,18 @@ fun SplashScreen(navController: NavController) {
     }
 
     Surface(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.fillMaxSize(),
+        Column(
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            Image(painter = painterResource(id = R.drawable.chatgpt), contentDescription = "Logo", modifier = Modifier.size(45.dp).scale(scale = scale.value))
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.chatgpt),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .size(45.dp)
+                    .scale(scale = scale.value)
+            )
         }
     }
 }

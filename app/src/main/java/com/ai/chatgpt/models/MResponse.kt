@@ -1,5 +1,8 @@
 package com.ai.chatgpt.models
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class MResponse(
     val choices: List<Choice>,
     val created: Int,

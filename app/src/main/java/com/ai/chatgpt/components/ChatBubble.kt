@@ -23,11 +23,18 @@ import androidx.compose.ui.unit.sp
 import com.ai.chatgpt.models.MChatDetails
 
 @Composable
-fun ChatBubble(chat: MChatDetails, isVisible: Boolean, color: Color) {
-
+fun ChatBubble(
+    chat: MChatDetails,
+    isVisible: Boolean,
+    color: Color
+) {
     val textColor = if (isSystemInDarkTheme()) Color.Black else Color.White
 
-    AnimatedVisibility(visible = isVisible, enter = slideInHorizontally(animationSpec = tween(1000)), exit = slideOutHorizontally(animationSpec = tween(1000))) {
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = slideInHorizontally(animationSpec = tween(durationMillis = 1000)),
+        exit = slideOutHorizontally(animationSpec = tween(durationMillis = 1000))
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -38,7 +45,17 @@ fun ChatBubble(chat: MChatDetails, isVisible: Boolean, color: Color) {
                 modifier = Modifier
                     .wrapContentSize(Alignment.Center)
                     .padding(20.dp),
-                shape = if (chat.type == "Assistant") RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp, bottomStart = 0.dp, bottomEnd = 10.dp) else RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp, bottomStart = 10.dp, bottomEnd = 0.dp),
+                shape = if (chat.type == "Assistant") RoundedCornerShape(
+                    topStart = 10.dp,
+                    topEnd = 10.dp,
+                    bottomStart = 0.dp,
+                    bottomEnd = 10.dp
+                ) else RoundedCornerShape(
+                    topStart = 10.dp,
+                    topEnd = 10.dp,
+                    bottomStart = 10.dp,
+                    bottomEnd = 0.dp
+                ),
                 color = color
             ) {
                 Text(
